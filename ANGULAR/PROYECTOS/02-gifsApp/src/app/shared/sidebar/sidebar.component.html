@@ -1,0 +1,16 @@
+<!--Sidebar-->
+<div class="bg-dark border-right p-3" id="sidebar">
+  <h3 class="text-light">Gifs-App</h3>
+  <hr class="text-light" />
+
+  <div class="list-group list-reset">
+    <a
+      class="list-group-item list-group-item-action"
+      *ngFor="let item of historial"
+      href="#"
+    >
+    <!--Añado pipe para mostrar con mayuscula sin modificar los datos-->
+      {{ item | titlecase }}
+    </a>
+  </div>
+</div>

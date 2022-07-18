@@ -1,0 +1,35 @@
+Encontrar todas las tareas que contienen la palabra “Kanban” pero no “work”.
+text ~"Kanban" AND NOT text ~"Work"
+CORRECCION:text ~"Kanban NOT Work"
+
+Encontrar todas las tareas creadas antes del 15/01.
+created < "2022/01/15"
+CORRECCION: Es correcto. No sale ninguna ya que el proyecto se ha creado hoy.
+
+Encontrar todas las tareas creadas después del 15/01.
+created >="2022/01/15"
+
+
+Quitar el responsable de una tarea y encontrarla usando el campo assignee.
+assignee = EMPTY
+
+Encontrar todas las tareas que no están finalizadas.
+CORRECCION:status !=Done
+
+Mover una tarea de En Curso a Finalizada y encontrarla usando sólo los estados.
+project="Proyecto muestra de Kanban" AND status=Done 
+
+Ordenar todas las tareas por su creación, de más a menos recientes.
+ORDER BY createdDate DESC
+CORRECCION:Es posible hacerlo desde la tabla
+
+Ordenar todas las tareas por título en orden alfabético Z-A
+CORRECCION:Es posible hacerlo desde la tabla
+project = "Proyecto muestra de Kanban" AND status = Done ORDER BY summary ASC
+
+
+¿Cuál sería la consulta en JQL para obtener todas las tareas que son del tipo Bug, que estén finalizadas con una prioridad alta, asignadas al usuario que ejecuta la consulta y creadas a partir del 1 de febrero de 2021, ordenadas por fecha de creación de más reciente a más antigua?
+
+(type=Bug ) AND (priority=High) AND (status=Done) AND (assignee=currentUser()) AND (created >="2021/02/01") ORDER BY created DESC
+
+issuetype=Bug AND status=Done AND priority=High AND assignee=currentUser() AND created > 2021-02-01 ORDER BY created DESC

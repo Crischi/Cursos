@@ -1,0 +1,25 @@
+Añadir un nuevo usuario: adm
+
+Crear una nueva tarea: user
+
+Avanzar una tarea en el tablero:user
+
+Crear un nuevo proyecto:adm
+
+Cambiar el logo del proyecto:adm
+
+Renovar la licencia de Jira:adm
+
+Instalar un plugin de reporting:adm
+
+Añadir un nuevo tipo de tarea a todos los proyectos:adm
+
+Gestionar permisos del proyecto:adm
+
+Añadir un nuevo tipo de tarea al proyecto:user
+
+Cambiar el método de pago:adm
+
+Adjuntar un archivo a una tarea:user
+
+Actualizar datos personales:adm
