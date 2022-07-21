@@ -8,15 +8,15 @@ import { Country } from '../../interfaces/pais.interface';
   styles: [],
 })
 export class PorPaisComponent {
-  //recoge contenido caja texto
   termino: string = '';
   hayError: boolean = false;
   paises : Country[]= [];
 
   constructor(private paisService: PaisService) {}
 
-  buscar() {
+  buscar(termino:string) {
     this.hayError = false;
+    this.termino=termino; //recibo termino y lo asocio a la propiedad
     this.paisService
       .buscarPais(this.termino)
       //TODO establecer un tipo
@@ -30,5 +30,10 @@ export class PorPaisComponent {
           this.paises=[];
         },
       });
+  }
+
+  sugerencias(termino:string){
+    this.hayError=false;
+    //TODO: creas sugerencias
   }
 }
