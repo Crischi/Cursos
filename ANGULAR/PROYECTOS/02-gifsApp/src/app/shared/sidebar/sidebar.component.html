@@ -5,9 +5,11 @@
 
   <div class="list-group list-reset">
     <a
-      class="list-group-item list-group-item-action"
       *ngFor="let item of historial"
+      (click)="buscar(item)"
       href="#"
+      class="list-group-item list-group-item-action"
+
     >
     <!--Añado pipe para mostrar con mayuscula sin modificar los datos-->
       {{ item | titlecase }}
