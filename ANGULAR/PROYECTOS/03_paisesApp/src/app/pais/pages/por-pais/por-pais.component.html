@@ -8,9 +8,27 @@
       (onEnter)="buscar($event)"
       (onDebounce)="sugerencias($event)"
       placeholder="Buscar Pais"
-      ></app-pais-input>
+    ></app-pais-input>
   </div>
 </div>
+<ul 
+*ngIf="mostrarSugerencias"
+class="list-group">
+  <!-- list-group-item-action permite hover sobre elemento -->
+  <li
+    *ngFor="let sugerencia of paisesSugeridos"
+    class="list-group-item list-group-item-action"
+  >
+    <a class="nav-link" [routerLink]="['/pais', sugerencia.cca2]">
+      {{ sugerencia.name.common }}</a
+    >
+  </li>
+  
+  <li class="list-group-item list-group-item-action"
+  (click)="buscar(termino)">
+    <a class="nav-link"> Buscar " {{ termino }} "</a>
+  </li>
+</ul>
 
 <div *ngIf="hayError" class="alert alert-danger">
   No se encontró {{ termino }}
