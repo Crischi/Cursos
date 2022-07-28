@@ -1,1 +1,66 @@
-<p>no-comunes works!</p>
+<div class="text-layout">
+  <h1>Pipes no tan comunes</h1>
+  <p>Pipes incluídos en Angular - Usualmente en el módulo de Common Module.</p>
+
+  <div class="grid">
+    <div class="col-12 md:col-6">
+      <p-fieldset legend="i18nSelect Pipe" [toggleable]="true">
+        <p>
+          Saludos {{ nombre }}, es un placer
+          {{ genero | i18nSelect: invitacionMapa }}.
+        </p>
+        <p-button (click)="cambiarCliente()" label="Cambiar persona">
+        </p-button>
+      </p-fieldset>
+    </div>
+    <div class="col-12 md:col-6">
+      <p-fieldset legend="i18nPlural Pipe" [toggleable]="true">
+        <p>Actualmente {{ clientes.length | i18nPlural: clientesMapa }} .</p>
+
+        <button
+          pButton
+          label="Borrar cliente"
+          (click)="borrarCliente()"
+        ></button>
+      </p-fieldset>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <p-fieldset legend="SlicePipe" [toggleable]="true">
+        <strong>Original</strong>
+        <pre>{{ clientes }}</pre>
+
+        <strong>Slice:0:2</strong>
+        <pre>{{ clientes | slice: 0:2 }}</pre>
+        <!--GUarda solo de la pos 0 a la 1 (2 excluida)-->
+      </p-fieldset>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <p-fieldset legend="KeyValuePipe" [toggleable]="true">
+        <ul>
+          <li *ngFor="let item of persona | keyvalue">{{item.key}} - {{item.value}}</li>
+        </ul>
+      </p-fieldset>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <p-fieldset legend="JsonPipe" [toggleable]="true">
+        <pre>{{heroes |json}}</pre>
+        
+      </p-fieldset>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <p-fieldset legend="AsyncPipe" [toggleable]="true">
+        <!-- <pre>{{miObservable | async}}</pre>
+        <pre>{{miPromesa }}</pre> -->
+        <pre *ngIf="!(miPromesa | async)">Resolviendo la promesa...</pre>
+        <pre>{{miPromesa | async}}</pre>
+        <!-- <pre>{{miPromesa | json}}</pre> -->
+
+        
+      </p-fieldset>
+    </div>
+  </div>
+</div>
