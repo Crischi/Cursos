@@ -25,12 +25,12 @@ export class MenuComponent implements OnInit {
           {
             label: 'Números',
             icon: 'pi pi-dollar', //Icono dolar
-            routerLink: 'numeros'//Redirecciona a numeros
+            routerLink: 'numeros'
           },
           {
             label: 'No comunes',
             icon: 'pi pi-globe', //Icono tierra
-            routerLink: 'no-comunes'//Redirecciona a no comunes
+            routerLink: 'no-comunes'
           },
         ],
       },
@@ -38,6 +38,7 @@ export class MenuComponent implements OnInit {
       {
         label: 'Pipes personalizados',
         icon: 'pi pi-cog', //Icono tuerca
+        routerLink: 'ordenar'
 
       }
     ];
