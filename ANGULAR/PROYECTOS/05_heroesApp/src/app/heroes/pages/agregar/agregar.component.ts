@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Heroe, Publisher } from '../../interfaces/heroes.interface';
 import { HeroesService } from '../../services/heroes.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-agregar',
   templateUrl: './agregar.component.html',
-  styles: [],
+  styles: [
+    `
+      img {
+        width: 100%;
+        border-radius: 5px;
+      }
+    `,
+  ],
 })
 export class AgregarComponent implements OnInit {
   publishers = [
@@ -27,10 +34,17 @@ export class AgregarComponent implements OnInit {
 
   constructor(
     private heroesService: HeroesService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute, //detecta cambios url
+    private router: Router //Permite navegar entre rutas
   ) {}
 
   ngOnInit(): void {
+
+    //En caso de estar en la ruta de edicion no realiza peticion
+    if (!this.router.url.includes('editar')) {
+      return;
+    }
+
     //al cambiar la url (editar heroe) abre formulario volcando sus datos
     this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.heroesService.getHeroesId(id)))
@@ -38,18 +52,18 @@ export class AgregarComponent implements OnInit {
   }
 
   guardarDatosHeroe() {
-    if (this.heroe.superhero.trim().length === 0) {return;}
-    //Diferenciamos editar de añadir
+    if (this.heroe.superhero.trim().length === 0) {
+      return;
+    }
+    //Diferenciamos actualizar de agregar
     if (this.heroe.id) {
-      //Actualizar
       this.heroesService
         .actualizarHeroe(this.heroe)
         .subscribe((heroe) => console.log('Actualizando...', heroe));
     } else {
-      //Crear   this.heroesService
-      this.heroesService
-        .agregarHeroe(this.heroe)
-        .subscribe((resp) => console.log('Respuesta:', resp));
+      this.heroesService.agregarHeroe(this.heroe).subscribe((heroe) => {
+        this.router.navigate(['/heroes/editar', heroe.id]); //Navegar a la nueva url
+      });
     }
   }
 }
