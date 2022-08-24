@@ -4,9 +4,12 @@ import { Heroe } from '../interfaces/heroes.interface';
 
 @Pipe({
   name: 'imagen',
+  //pure: false, //Detecta cambios en objetos compuestos
+  pure:true, //Solo detecta cambios en valor primitivos y ref a objetos //Detecta cambios en objetos compuestos
 })
 export class ImagenPipe implements PipeTransform {
   transform(heroe: Heroe): string {
+    console.log("Pipe procesado")
     //Si no existe img ni url
     if (!heroe.id && !heroe.alt_img) {
       return 'assets/no-image.png';

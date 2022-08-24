@@ -3,6 +3,9 @@ import { Heroe, Publisher } from '../../interfaces/heroes.interface';
 import { HeroesService } from '../../services/heroes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
 
 @Component({
   selector: 'app-agregar',
@@ -35,11 +38,12 @@ export class AgregarComponent implements OnInit {
   constructor(
     private heroesService: HeroesService,
     private activatedRoute: ActivatedRoute, //detecta cambios url
-    private router: Router //Permite navegar entre rutas
+    private router: Router, //Permite navegar entre rutas
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-
     //En caso de estar en la ruta de edicion no realiza peticion
     if (!this.router.url.includes('editar')) {
       return;
@@ -59,11 +63,38 @@ export class AgregarComponent implements OnInit {
     if (this.heroe.id) {
       this.heroesService
         .actualizarHeroe(this.heroe)
-        .subscribe((heroe) => console.log('Actualizando...', heroe));
+        .subscribe((heroe) => this.mostratSnackbar('Registro actualizado'));
     } else {
       this.heroesService.agregarHeroe(this.heroe).subscribe((heroe) => {
         this.router.navigate(['/heroes/editar', heroe.id]); //Navegar a la nueva url
+        this.mostratSnackbar('Registro creado');
       });
     }
+  }
+
+  borrarDatosHeroe() {
+    //Pedimos confirmacion antes de borrar
+    const dialog = this.dialog.open(ConfirmarComponent, {
+      width: '250px',
+      data: { ...this.heroe },
+    });
+
+    //Recuperamos true o undefined
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.heroesService
+          .borrarHeroe(this.heroe.id!) //Borramos
+          .subscribe((resp) => {
+            this.router.navigate(['/heroes']); //Navegar al listado
+          });
+      }
+    });
+    
+  }
+
+  mostratSnackbar(mensaje: string): void {
+    this.snackBar.open(mensaje, 'Ok!', {
+      duration: 2500,
+    });
   }
 }
